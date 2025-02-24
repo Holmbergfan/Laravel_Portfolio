@@ -4,14 +4,13 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-text" data-aos="fade-up">
-                <h1 class="title-lobster">Welcome, Hobbyists!</h1>
-                <p>If you're here expecting professional-grade work, you better run – these are just my fun, hobby projects!</p>
-            </div>
-        </div>
-    </section>
+    <section class="hero parallax" style="background-image: url('https://source.unsplash.com/1600x900/?technology,code');">
+    <div class="hero-text">
+        <h1>Welcome, Hobbyists!</h1>
+        <p>If you're here expecting professional-grade work, you better run – these are just my fun, hobby projects!</p>
+    </div>
+</section>
+
 
     <!-- Apps Section -->
     <section class="portfolio-section" id="apps">

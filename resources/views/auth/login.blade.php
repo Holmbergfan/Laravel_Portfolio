@@ -1,35 +1,4 @@
-@extends('layouts.app')
 
-@section('title', 'Login')
-
-@section('content')
-<div class="wrapper">
-  <form class="form" action="{{ route('login') }}" method="POST">
-    @csrf
-    <span class="title">Login</span>
-
-    <div class="input-container">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Email icon SVG paths -->
-      </svg>
-      <input class="input" type="email" name="email" placeholder="Email" required />
-    </div>
-
-    <div class="input-container">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Password icon SVG paths -->
-      </svg>
-      <input class="input" type="password" name="password" placeholder="Password" required />
-    </div>
-
-    <div class="login-button">
-      <input class="input" type="submit" value="Login" />
-    </div>
-
-    <div class="texture"></div>
-  </form>
-</div>
-@endsection
 @extends('layouts.app')
 
 @section('title', 'Login')

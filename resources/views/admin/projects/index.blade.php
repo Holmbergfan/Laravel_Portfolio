@@ -1,48 +1,42 @@
 @extends('layouts.app')
 
-@section('title', 'Admin Projects')
+@section('title', 'Holmberg Portfolio')
 
 @section('content')
-<div class="container">
-  <h1>Admin Projects</h1>
-  <div style="margin-bottom: 1rem;">
-    <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">Create New Project</a>
-  </div>
+    <!-- Hero Section -->
+    <section class="hero parallax" style="background-image: url('https://source.unsplash.com/1600x900/?technology,code');">
+        <div class="hero-text">
+            <h1>Welcome, Hobbyists!</h1>
+            <p>If you're here expecting professional-grade work, you better run – these are just my fun, hobby projects!</p>
+        </div>
+    </section>
 
-  @if (session('success'))
-    <div class="alert alert-success">
-      {{ session('success') }}
-    </div>
-  @endif
+    <!-- Apps Section -->
+    <section class="portfolio-section" id="apps">
+        <div class="container">
+            <div class="section-header" data-aos="fade-right">
+                <h2>Apps</h2>
+                <p>High-level info about each app. Four columns with detail-rich cards.</p>
+            </div>
+            <div class="project-grid apps-grid" data-aos="fade-up">
+                @foreach ($projects->where('category', 'Apps')->take(4) as $project)
+                    @include('partials.project_card', ['project' => $project, 'cardClass' => 'apps-card'])
+                @endforeach
+            </div>
+            <div class="view-more" data-aos="fade-up">
+                <a href="{{ route('category.show', 'Apps') }}" class="btn btn-outline">View All Apps</a>
+            </div>
+        </div>
+    </section>
 
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($projects as $project)
-          <tr>
-            <td>{{ $project->id }}</td>
-            <td>{{ $project->title }}</td>
-            <td>{{ $project->category }}</td>
-            <td>
-              <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-sm btn-primary">Edit</a>
-              <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" style="display: inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this project?')">Delete</button>
-              </form>
-            </td>
-          </tr>
-        @endforeach
-      </tbody>
-    </table>
-  </div>
-</div>
+    <style>
+        .portfolio-section {
+            padding: 4rem 0;
+        }
+
+        .section-header {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+    </style>
 @endsection
