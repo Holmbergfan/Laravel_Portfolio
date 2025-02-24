@@ -1,12 +1,14 @@
 import './bootstrap';
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize AOS animations
-    AOS.init({
-        duration: 800,
-        easing: 'ease-in-out',
-        once: false
-    });
+    // Only initialize AOS if defined
+    if (typeof AOS !== "undefined") {
+      AOS.init({
+          duration: 800,
+          easing: 'ease-in-out',
+          once: false
+      });
+    }
 
     // Flip card on click
     document.querySelectorAll('.project-card').forEach(card => {

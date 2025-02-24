@@ -1,42 +1,65 @@
 @extends('layouts.app')
 
-@section('title', 'Holmberg Portfolio')
+@section('title', 'All Projects')
 
 @section('content')
-    <!-- Hero Section -->
-    <section class="hero parallax" style="background-image: url('https://source.unsplash.com/1600x900/?technology,code');">
-        <div class="hero-text">
-            <h1>Welcome, Hobbyists!</h1>
-            <p>If you're here expecting professional-grade work, you better run – these are just my fun, hobby projects!</p>
-        </div>
-    </section>
+<div class="container">
+    <h1>All Projects</h1>
 
-    <!-- Apps Section -->
-    <section class="portfolio-section" id="apps">
-        <div class="container">
-            <div class="section-header" data-aos="fade-right">
-                <h2>Apps</h2>
-                <p>High-level info about each app. Four columns with detail-rich cards.</p>
-            </div>
-            <div class="project-grid apps-grid" data-aos="fade-up">
-                @foreach ($projects->where('category', 'Apps')->take(4) as $project)
-                    @include('partials.project_card', ['project' => $project, 'cardClass' => 'apps-card'])
-                @endforeach
-            </div>
-            <div class="view-more" data-aos="fade-up">
-                <a href="{{ route('category.show', 'Apps') }}" class="btn btn-outline">View All Apps</a>
-            </div>
-        </div>
-    </section>
+    <!-- If you want a button to create a new project -->
+    <div style="margin-bottom: 1rem;">
+        <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">Create New Project</a>
+    </div>
 
-    <style>
-        .portfolio-section {
-            padding: 4rem 0;
-        }
-
-        .section-header {
-            margin-bottom: 2.5rem;
-            text-align: center;
-        }
-    </style>
+    <!-- Table of projects -->
+    <table class="table admin-table">
+        <thead>
+            <tr>
+                <th>Preview</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th style="width: 180px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($projects as $project)
+                <tr>
+                    <td>
+                        @if($project->image_url)
+                            <!-- small thumbnail, e.g. 80px wide -->
+                            <img src="{{ $project->image_url }}" alt="{{ $project->title }}" style="width: 80px; height: auto; border-radius:4px;">
+                        @else
+                            <img src="/images/placeholder.png" alt="Placeholder" style="width: 80px; height: auto; border-radius:4px;">
+                        @endif
+                    </td>
+                    <td>
+                        {{ $project->title }}
+                    </td>
+                    <td>{{ $project->category ?? 'N/A' }}</td>
+                    <td>
+                        <!-- Edit Link -->
+                        <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-sm btn-warning">
+                            Edit
+                        </a>
+                        <!-- Delete Form -->
+                        <form action="{{ route('admin.projects.destroy', $project->id) }}"
+                              method="POST"
+                              style="display:inline-block;"
+                              onsubmit="return confirm('Are you sure you want to delete this project?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4">No projects found.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 @endsection

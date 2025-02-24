@@ -6,23 +6,3 @@
         </div>
     </div>
 </section>
-
-<style>
-    .hero {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(20, 20, 20, 0.8));
-        position: relative;
-        overflow: hidden;
-    }
-
-    .hero-text {
-        position: relative;
-        z-index: 2;
-        color: #fff;
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-    }
-</style>

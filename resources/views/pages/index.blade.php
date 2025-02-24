@@ -6,8 +6,8 @@
     <!-- Hero Section -->
     <section class="hero parallax" style="background-image: url('https://source.unsplash.com/1600x900/?technology,code');">
     <div class="hero-text">
-        <h1>Welcome, Hobbyists!</h1>
-        <p>If you're here expecting professional-grade work, you better run – these are just my fun, hobby projects!</p>
+        <h1>Welcome, Brave Explorer!</h1>
+        <p>If you came expecting Fortune 500-quality masterpieces, you might want to head back to civilization. This is the realm of weekend experiments and creative madness!</p>
     </div>
 </section>
 

@@ -20,15 +20,6 @@
 
     <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            AOS.init({
-                duration: 800,
-                easing: 'ease-in-out',
-                once: false,
-            });
-        });
-    </script>
 
     @vite(['resources/js/app.js'])
 </body>

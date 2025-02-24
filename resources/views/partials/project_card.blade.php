@@ -1,106 +1,121 @@
-<div class="project-card">
-    <div class="content">
-        <!-- Front Side -->
-        <div class="front">
-            <div class="img">
-                @if($project->image_url)
-                    <img src="{{ $project->image_url }}" alt="{{ $project->title }}">
-                @else
-                    <img src="/images/placeholder.png" alt="Placeholder">
-                @endif
-            </div>
-            <div class="project-info">
-                <h3>{{ $project->title }}</h3>
-                <div class="badges">
-                    @if($project->badges && json_decode($project->badges))
-                        @foreach(json_decode($project->badges) as $badge)
-                            <span class="badge">{{ $badge }}</span>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
+@php
+use Illuminate\Support\Str;
+
+// We can store the category in a variable for convenience
+$cat = $project->category ?? 'Other';
+$desc = Str::limit($project->description ?? '', 100, '...'); // text truncated
+@endphp
+
+@if ($cat === 'Web')
+    <!--  WEB: bigger card, half width, bigger screenshot, button right -->
+    <div class="project-card web-card">
+        <div class="web-image">
+            @if($project->image_url)
+                <img src="{{ $project->image_url }}" alt="{{ $project->title }}" style="max-width: 100%; height: auto;">
+            @else
+                <img src="/images/placeholder.png" alt="Placeholder" style="max-width: 100%; height: auto;">
+            @endif
         </div>
 
-        <!-- Back Side -->
-        <div class="back">
-            <div class="project-info">
-                <h3>{{ $project->title }}</h3>
-                <p>{{ Str::limit($project->description ?? '', 100) }}</p>
+        <div class="web-content">
+            <h3>{{ $project->title }}</h3>
+            <!-- Show badges if exist -->
+            @if($project->badges && json_decode($project->badges))
+                <div class="badges">
+                    @foreach(json_decode($project->badges) as $badge)
+                        <span class="badge">{{ $badge }}</span>
+                    @endforeach
+                </div>
+            @endif
+
+            <p>{{ $desc }}</p>
+
+            <div class="button-row right-align">
                 @if($project->project_url)
-                    <a href="{{ $project->project_url }}" class="btn btn-outline">Read More</a>
+                    <a href="{{ $project->project_url }}" class="btn small-btn">Read More</a>
                 @endif
             </div>
         </div>
     </div>
-</div>
 
-<style>
-    .project-card {
-        width: 250px;  /* Smaller */
-        height: 320px;
-        perspective: 1000px;
-        transition: transform 0.4s ease-in-out;
-    }
+@elseif($cat === 'Apps' || $cat === '3D')
+    <!--  APPS / 3D: smaller “blueish” style card -->
+    <div class="blue-card apps-card">
+        <!-- top image -->
+        <div class="card-image">
+            @if($project->image_url)
+                <img src="{{ $project->image_url }}" alt="{{ $project->title }}" style="max-width: 100%; height: auto;">
+            @else
+                <img src="/images/placeholder.png" alt="Placeholder" style="max-width: 100%; height: auto;">
+            @endif
+        </div>
 
-    .project-card:hover {
-        transform: scale(1.05); /* Slight growth */
-    }
+        <div class="card-content">
+            <span class="category-label">{{ $cat }}</span>
+            <h3>{{ $project->title }}</h3>
+            
+            <!-- Show badges if exist -->
+            @if($project->badges && json_decode($project->badges))
+                <div class="badges">
+                    @foreach(json_decode($project->badges) as $badge)
+                        <span class="badge">{{ $badge }}</span>
+                    @endforeach
+                </div>
+            @endif
 
-    .content {
-        width: 100%;
-        height: 100%;
-        transform-style: preserve-3d;
-        transition: transform 0.5s;
-    }
+            <p class="description">{{ $desc }}</p>
 
-    .project-card:hover .content {
-        transform: rotateY(180deg);
-    }
+            <div class="button-row right-align">
+                @if($project->project_url)
+                    <a href="{{ $project->project_url }}" class="btn small-btn">Read More</a>
+                @endif
+            </div>
+        </div>
+    </div>
 
-    .front, .back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-        background: rgba(30, 30, 30, 0.9);
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-    }
+@elseif($cat === 'Experimental')
+    <!--  EXPERIMENTAL: flipping card or keep as is?  -->
+    <!-- Example flipping card layout -->
+    <div class="project-card flip-card exp-card">
+        <div class="content">
+            <!-- front -->
+            <div class="front">
+                <div class="img">
+                    @if($project->image_url)
+                        <img src="{{ $project->image_url }}" alt="{{ $project->title }}" style="max-width: 100%; height: auto;">
+                    @else
+                        <img src="/images/placeholder.png" alt="Placeholder" style="max-width: 100%; height: auto;">
+                    @endif
+                </div>
+                <div class="project-info">
+                    <h3>{{ $project->title }}</h3>
+                    @if($project->badges && json_decode($project->badges))
+                        <div class="badges">
+                            @foreach(json_decode($project->badges) as $badge)
+                                <span class="badge">{{ $badge }}</span>
+                            @endforeach
+                        </div>
+                    @endif
+                    <p>{{ $desc }}</p>
+                </div>
+            </div>
+            <!-- back -->
+            <div class="back">
+                <div class="project-info">
+                    <h3>{{ $project->title }}</h3>
+                    <p>{{ $desc }}</p>
+                    @if($project->project_url)
+                        <a href="{{ $project->project_url }}" class="btn small-btn">Read More</a>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 
-    .front {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .front .img img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
-
-    .badges {
-        margin-top: 10px;
-        display: flex;
-        gap: 5px;
-    }
-
-    .badge {
-        background: rgba(255, 255, 255, 0.2);
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-size: 12px;
-    }
-
-    .back {
-        transform: rotateY(180deg);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
-</style>
+@else
+    <!-- fallback or "Other" category can share a style or keep it simple -->
+    <div class="project-card default-card">
+        <h3>{{ $project->title }}</h3>
+        <p>{{ $desc }}</p>
+    </div>
+@endif

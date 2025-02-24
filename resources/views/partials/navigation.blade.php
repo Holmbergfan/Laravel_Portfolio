@@ -9,12 +9,24 @@
                 <li><a href="#experimental">Experimental</a></li>
             </ul>
         </nav>
-        @auth
-            <form method="POST" action="{{ route('logout') }}" class="nav-auth">
-                @csrf
-                <button type="submit" class="btn btn-auth">Logout</button>
-            </form>
-        @endauth
+
+        <div class="nav-auth">
+          @auth
+            <div class="user-menu">
+              <button class="user-icon">
+                <img src="/storage/icons/user.svg" alt="User">
+              </button>
+              <div class="user-dropdown">
+                <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+                <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+                  <button type="submit">Logout</button>
+                </form>
+              </div>
+            </div>
+          @else
+            <a href="{{ route('login') }}" class="btn-auth">Login</a>
+          @endauth
+        </div>
     </div>
 </header>
-
