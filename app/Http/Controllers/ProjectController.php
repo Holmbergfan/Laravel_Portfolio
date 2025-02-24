@@ -71,9 +71,14 @@ class ProjectController extends Controller
     }
 
     // Show a single project detail page
-    public function show($id)
+    public function show(Project $project)
     {
-        $project = Project::findOrFail($id);
-        return view('projects.show', compact('project'));
+        return view('pages.project', compact('project'));
+    }
+
+    public function byCategory($category)
+    {
+        $projects = Project::where('category', $category)->get();
+        return view('pages.category', compact('projects', 'category'));
     }
 }

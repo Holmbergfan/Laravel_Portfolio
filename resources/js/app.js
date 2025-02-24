@@ -19,4 +19,11 @@ document.addEventListener('DOMContentLoaded', function() {
     window.closeGallery = function() {
         document.getElementById('gallery-modal').classList.add('hidden');
     }
+
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: false
+    });
 });

@@ -6,19 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('status')->nullable();  // Ex: "Open Source", "Proprietary", etc.
-            $table->string('type')->nullable();    // Ex: "Windows", "Web", ...
+            $table->text('description');
+            $table->string('category');
+            $table->string('image_url')->nullable();
+            $table->json('badges')->nullable();
+            $table->string('status')->default('active');
             $table->timestamps();
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('projects');
     }

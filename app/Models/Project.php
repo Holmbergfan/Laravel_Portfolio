@@ -14,30 +14,13 @@ class Project extends Model
     protected $fillable = [
         'title',
         'description',
-        'image_url',
         'category',
-        'download_url',
-        'repo_url',
-        'status',
-        'type',
-        'version',
-        'version_history',
+        'image_url',
         'badges',
-        'gallery_images',
-        'files',
-        'icon',
+        'status'
     ];
 
-    // 'gallery_images' is JSON column in DB
-    // 'badges' is stored as JSON text in DB
     protected $casts = [
-        'gallery_images' => 'array',
-        'badges' => 'array',
-        'files' => 'array',
+        'badges' => 'array'
     ];
-
-    public function getBadgesArrayAttribute()
-    {
-        return json_decode($this->badges, true) ?? [];
-    }
 }
