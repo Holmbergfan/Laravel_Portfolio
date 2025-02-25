@@ -7,12 +7,9 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function index(): View
+    public function index()
     {
-        $projects = Project::orderBy('created_at', 'desc')->get();
-        
-        return view('pages.index', [
-            'projects' => $projects
-        ]);
+        $projects = Project::all();
+        return view('pages.index', compact('projects'));
     }
 }

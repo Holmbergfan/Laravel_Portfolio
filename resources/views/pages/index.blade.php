@@ -1,83 +1,50 @@
 @extends('layouts.app')
 
-@section('title', 'Holmberg Portfolio')
+@section('title', 'Holmberg.pro')
 
 @section('content')
-    <!-- Hero Section -->
-    <section class="hero parallax" style="background-image: url('https://source.unsplash.com/1600x900/?technology,code');">
-    <div class="hero-text">
-        <h1>Welcome, Brave Explorer!</h1>
-        <p>If you came expecting Fortune 500-quality masterpieces, you might want to head back to civilization. This is the realm of weekend experiments and creative madness!</p>
-    </div>
-</section>
+<div class="container mt-5">
+  <section class="bg-secondary text-center py-5">
+    <h1 class="gradient-text display-4">
+      Welcome, Brave Explorer!
+    </h1>
+    <p class="lead">
+      If you came expecting Fortune 500-quality masterpieces, you might want to head back to civilization.
+      This is the realm of weekend experiments and creative madness!
+    </p>
+  </section>
+</div>
 
+<div class="container mt-5">
+  @php
+    // Get unique category names from the projects collection
+    $uniqueCategories = $projects->pluck('category')->unique();
+  @endphp
 
-    <!-- Apps Section -->
-    <section class="portfolio-section" id="apps">
-        <div class="container">
-            <div class="section-header" data-aos="fade-right">
-                <h2>Apps</h2>
-                <p>High-level info about each app. Four columns with detail-rich cards.</p>
+  @forelse($uniqueCategories as $cat)
+    {{-- Each category in its own section --}}
+    <section id="{{ strtolower($cat) }}" class="content-section bg-secondary mb-5">
+      <h2>{{ $cat }}</h2>
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 mt-4">
+        @foreach ($projects->where('category', $cat)->take(4) as $project)
+          {{-- 4 columns on lg screens, 3 columns on md, 2 on sm --}}
+          <div class="col h-100"> {{-- Added h-100 to ensure equal height --}}
+            <div class="d-flex"> {{-- Added flex container --}}
+              @include('partials.project_card', ['project' => $project])
             </div>
-            <div class="project-grid apps-grid" data-aos="fade-up">
-                @foreach ($projects->where('category', 'Apps')->take(4) as $project)
-                    @include('partials.project_card', ['project' => $project, 'cardClass' => 'apps-card'])
-                @endforeach
-            </div>
-            <div class="view-more" data-aos="fade-up">
-                <a href="{{ route('category.show', 'Apps') }}" class="btn btn-outline">View All Apps</a>
-            </div>
-        </div>
+          </div>
+        @endforeach
+      </div>
+
+      @if ($projects->where('category', $cat)->count() > 4)
+        <a href="{{ route('category.show', $cat) }}" class="btn btn-secondary">
+          View all {{ $cat }} Projects
+        </a>
+      @endif
     </section>
-
-    <!-- Web Section -->
-    <section class="portfolio-section" id="web">
-        <div class="container">
-            <div class="section-header" data-aos="fade-right">
-                <h2>Web</h2>
-                <p>Two columns, focusing on the visuals of each web project.</p>
-            </div>
-            <div class="project-grid web-grid" data-aos="fade-up">
-                @foreach ($projects->where('category', 'Web')->take(2) as $project)
-                    @include('partials.project_card', ['project' => $project, 'cardClass' => 'web-card'])
-                @endforeach
-            </div>
-            <div class="view-more" data-aos="fade-up">
-                <a href="{{ route('category.show', 'Web') }}" class="btn btn-outline">View All Web Projects</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3D Section -->
-    <section class="portfolio-section" id="3d">
-        <div class="container">
-            <div class="section-header" data-aos="fade-right">
-                <h2>3D</h2>
-                <p>Three columns with mid-sized images to showcase 3D models.</p>
-            </div>
-            <div class="project-grid three-d-grid" data-aos="fade-up">
-                @foreach ($projects->where('category', '3D')->take(3) as $project)
-                    @include('partials.project_card', ['project' => $project, 'cardClass' => 'three-d-card'])
-                @endforeach
-            </div>
-            <div class="view-more" data-aos="fade-up">
-                <a href="{{ route('category.show', '3D') }}" class="btn btn-outline">View All 3D Projects</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experimental Section -->
-    <section class="portfolio-section" id="experimental">
-        <div class="container">
-            <div class="section-header" data-aos="fade-right">
-                <h2>Experimental</h2>
-                <p>Miscellaneous or experimental projects.</p>
-            </div>
-            <div class="project-grid other-grid" data-aos="fade-up">
-                @foreach ($projects->where('category', 'Experimental')->take(2) as $project)
-                    @include('partials.project_card', ['project' => $project])
-                @endforeach
-            </div>
-        </div>
-    </section>
+  @empty
+    <p>No Projects found.</p>
+  @endforelse
+</div>
 @endsection

@@ -11,6 +11,6 @@ class Badge extends Model
 
     protected $fillable = [
         'name',
-        'image_url',
+        'group',
     ];
 }

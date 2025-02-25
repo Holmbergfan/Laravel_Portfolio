@@ -10,12 +10,20 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'admins',  // Pekar nedan på 'providers' => ['admins']
+            'provider' => 'users',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
         ],
     ],
 
     'providers' => [
         // Viktigt: "admins" måste finnas, eftersom 'guard' => 'admins' ovan
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class, // Pekar på Admin-modellen
@@ -24,10 +32,8 @@ return [
 
     'passwords' => [
         'admins' => [
-            'provider' => 'admins',
-            'table' => 'password_resets', // Standard. Om du vill använda password resets
-            'expire' => 60,
-            'throttle' => 60,
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
     ],
 

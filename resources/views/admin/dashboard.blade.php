@@ -20,7 +20,7 @@
 
     <div class="dashboard-actions" style="margin: 1rem 0;">
         <a href="{{ route('admin.projects.index') }}" class="btn btn-outline">Manage All Projects</a>
-        <a href="{{ route('admin.projects.create') }}" class="btn btn-primary">Create New Project</a>
+        <a href="{{ route('admin.projects.create') }}" class="btn btn-outline">Create New Project</a>
     </div>
 
     <div class="latest-projects" style="margin-top: 2rem;">
@@ -30,7 +30,7 @@
                 <li>
                     <strong>{{ $proj->title }}</strong>
                     ({{ $proj->category }})
-                    <a href="{{ route('admin.projects.edit', $proj->id) }}" class="btn-sm btn-warning">Edit</a>
+                    <a href="{{ route('admin.projects.edit', $proj->id) }}" class="btn-sm btn-outline">Edit</a>
                 </li>
             @empty
                 <li>No recent projects.</li>

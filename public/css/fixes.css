@@ -1,0 +1,36 @@
+/* Fix viewport warnings */
+@viewport {
+  width: device-width;
+  zoom: 1.0;
+}
+
+/* Fix font smoothing */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fix transitions */
+.transition {
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+}
+
+/* Fix min/max dimensions */
+.min-dimensions {
+  min-width: initial;
+  min-height: initial;
+}
+
+/* Fix select styling */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Remove MS-specific pseudo-elements */
+input::-ms-clear,
+input::-ms-reveal {
+  display: none;
+}

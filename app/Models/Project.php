@@ -16,11 +16,22 @@ class Project extends Model
         'description',
         'category',
         'image_url',
+        'project_url',
+        'github_url',
         'badges',
-        'status'
+        'gallery_images',
+        'files',
+        'download_url',
+        'repo_url',
+        'status',
+        'type',
+        'version',
+        'version_history'
     ];
 
     protected $casts = [
-        'badges' => 'array'
+        'badges' => 'array',
+        'gallery_images' => 'array',
+        'files' => 'array',
     ];
 }
